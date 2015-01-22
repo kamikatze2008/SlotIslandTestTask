@@ -1,7 +1,7 @@
 <node1 attr1="myattr1">MyNode1</node15>
-value1=1f23&value2=457.98&value5=1,2,3,4,5&value6=1,2:3,4:5&value7=waurnfe
+value1=1f23&value2=457.98&value5=1,5,4,3,2&value6=1,2:3,4:5&value7=waurnfe
 <node2 attr2="myattr2">MyNode2</node2>
-value1=123&value2=457.9&value5=1,2,3,4,5&value6=1,2:3,4:5&value7=waurnffe
-suck
-my
-fuck
+value1=123&value2=457.89&value5=1,5,3,4,2,7&value6=1,2:3,4:5&value7=waurnffe
+some
+other
+text

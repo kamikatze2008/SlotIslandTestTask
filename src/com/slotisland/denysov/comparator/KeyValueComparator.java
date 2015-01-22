@@ -1,9 +1,6 @@
 package com.slotisland.denysov.comparator;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -82,7 +79,7 @@ public class KeyValueComparator implements LineComparator {
         StringBuilder resultString=new StringBuilder();
         String tempKey;
         Pattern numberPattern = Pattern.compile("(\\d)+(\\.)*(\\d)*");
-        Pattern arrayPattern = Pattern.compile("(\\d(\\.)*(\\d)*,)+\\d(\\.)*(\\d)*");
+        Pattern arrayPattern = Pattern.compile("((\\d)+(\\.)*(\\d)*,)+(\\d)+(\\.)*(\\d)*");
         Matcher firstNumberMatcher, secondNumberMatcher;
         Matcher firstArrayMatcher,secondArrayMatcher;
         String firstStringValue;
@@ -100,13 +97,28 @@ public class KeyValueComparator implements LineComparator {
                     double firstValue=Double.parseDouble(firstStringValue);
                     double secondValue=Double.parseDouble(secondStringValue);
                     if(Math.abs(firstValue-secondValue)>0.001){
-                        resultString.append("Line ").append(lineNumber).append(" has different numbers in \"").
+                        resultString.append("Line ").append(lineNumber).append(". Different numbers in \"").
                                 append(tempKey).append("\" tag.\n");
                     }
                 } else if(firstArrayMatcher.matches() && secondArrayMatcher.matches()){
-
+                    StringTokenizer firstStringTokenizer = new StringTokenizer(firstStringValue,",");
+                    StringTokenizer secondStringTokenizer = new StringTokenizer(secondStringValue,",");
+                    List<Double> firstArrayList = new ArrayList<Double>();
+                    List<Double> secondArrayList= new ArrayList<Double>();
+                    while (firstStringTokenizer.hasMoreTokens()){
+                        firstArrayList.add(Double.parseDouble(firstStringTokenizer.nextToken()));
+                    }
+                    while (secondStringTokenizer.hasMoreTokens()){
+                        secondArrayList.add(Double.parseDouble(secondStringTokenizer.nextToken()));
+                    }
+                    Collections.sort(firstArrayList);
+                    Collections.sort(secondArrayList);
+                    if(!firstArrayList.equals(secondArrayList)){
+                        resultString.append("Line ").append(lineNumber).append(". Different arrays in \"").
+                                append(tempKey).append("\" tag.\n");
+                    }
                 } else{
-                    resultString.append("Line ").append(lineNumber).append(" has different value types in \"").
+                    resultString.append("Line ").append(lineNumber).append(". Different value types in \"").
                             append(tempKey).append("\" tag.\n");
                 }
             }

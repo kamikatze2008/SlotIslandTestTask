@@ -16,6 +16,6 @@ public class NodeComparator implements LineComparator{
 
     @Override
     public String compareLines() {
-        return null;
+        return "";
     }
 }
