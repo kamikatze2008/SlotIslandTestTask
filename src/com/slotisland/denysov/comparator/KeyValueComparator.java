@@ -11,7 +11,7 @@ public class KeyValueComparator implements LineComparator {
     private String firstLine;
     private String secondLine;
     private int lineNumber;
-    private static Pattern keyPattern = Pattern.compile("[^&]+=");
+    private static final Pattern KEY_PATTERN = Pattern.compile("[^&]+=");
     private HashMap<String, String> firstHashMap;
     private HashMap<String, String> secondHashMap;
     private Set<String> keySet;
@@ -41,7 +41,7 @@ public class KeyValueComparator implements LineComparator {
         String key;
         String value;
         firstHashMap = new HashMap<String, String>();
-        keyMatcher = keyPattern.matcher(firstLine);
+        keyMatcher = KEY_PATTERN.matcher(firstLine);
         while (keyMatcher.find()) {
             key = keyMatcher.group().replace("=", "");
             keySet.add(key);
@@ -61,7 +61,7 @@ public class KeyValueComparator implements LineComparator {
         String key;
         String value;
         secondHashMap = new HashMap<String, String>();
-        keyMatcher = keyPattern.matcher(secondLine);
+        keyMatcher = KEY_PATTERN.matcher(secondLine);
         while (keyMatcher.find()) {
             key = keyMatcher.group().replace("=", "");
             keySet.add(key);
